@@ -36,7 +36,8 @@ class DriverModelTests(TestCase):
 
     def test_driver_str(self):
         """Test the driver string representation"""
-        expected = f"{self.driver.username} ({self.driver.first_name} {self.driver.last_name})"
+        expected = (f"{self.driver.username} "
+                    f"({self.driver.first_name} {self.driver.last_name})")
         self.assertEqual(str(self.driver), expected)
 
     def test_driver_get_absolute_url(self):
