@@ -84,7 +84,6 @@ class CarListView(LoginRequiredMixin, generic.ListView):
 
         return queryset
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         model = self.request.GET.get("model", "")
@@ -127,7 +126,6 @@ class DriverListView(LoginRequiredMixin, generic.ListView):
             queryset = queryset.filter(username__icontains=username)
 
         return queryset
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
