@@ -72,16 +72,18 @@ class ManufacturerDeleteView(LoginRequiredMixin, generic.DeleteView):
 class CarListView(LoginRequiredMixin, generic.ListView):
     model = Car
     paginate_by = 5
-    queryset = Car.objects.select_related("manufacturer")
+    context_object_name = "car_list"
+    template_name = "taxi/car_list.html"
 
     def get_queryset(self):
-        queryset = Car.objects.select_related("manufacturer")
+        queryset = Car.objects.select_related("manufacturer").order_by("id")
         model = self.request.GET.get("model")
 
         if model:
             queryset = queryset.filter(model__icontains=model)
 
         return queryset
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -114,15 +116,18 @@ class CarDeleteView(LoginRequiredMixin, generic.DeleteView):
 class DriverListView(LoginRequiredMixin, generic.ListView):
     model = Driver
     paginate_by = 5
+    context_object_name = "driver_list"
+    template_name = "taxi/driver_list.html"
 
     def get_queryset(self):
-        queryset = Driver.objects.all()
+        queryset = Driver.objects.all().order_by("id")
         username = self.request.GET.get("username")
 
         if username:
             queryset = queryset.filter(username__icontains=username)
 
         return queryset
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

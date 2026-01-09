@@ -18,8 +18,11 @@
       style="width: 300px;"
     >
     <button class="btn btn-primary" type="submit">Search</button>
+
     {% if search_query %}
-      <a href="{% url 'taxi:driver-list' %}" class="btn btn-secondary ml-2">Clear</a>
+      <a href="{% url 'taxi:driver-list' %}" class="btn btn-secondary ml-2">
+        Clear
+      </a>
     {% endif %}
   </form>
 
@@ -30,28 +33,28 @@
   {% if driver_list %}
     <table class="table">
       <thead>
-      <tr>
-        <th>ID</th>
-        <th>Username</th>
-        <th>License number</th>
-        <th>First name</th>
-        <th>Last name</th>
-      </tr>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>License number</th>
+          <th>First name</th>
+          <th>Last name</th>
+        </tr>
       </thead>
       <tbody>
-      {% for driver in driver_list %}
-        <tr>
-          <td>{{ driver.id }}</td>
-          <td>
-            <a href="{% url 'taxi:driver-detail' pk=driver.pk %}">
-              {{ driver.username }}
-            </a>
-          </td>
-          <td>{{ driver.license_number }}</td>
-          <td>{{ driver.first_name }}</td>
-          <td>{{ driver.last_name }}</td>
-        </tr>
-      {% endfor %}
+        {% for driver in driver_list %}
+          <tr>
+            <td>{{ driver.id }}</td>
+            <td>
+              <a href="{% url 'taxi:driver-detail' pk=driver.pk %}">
+                {{ driver.username }}
+              </a>
+            </td>
+            <td>{{ driver.license_number }}</td>
+            <td>{{ driver.first_name }}</td>
+            <td>{{ driver.last_name }}</td>
+          </tr>
+        {% endfor %}
       </tbody>
     </table>
 
@@ -60,169 +63,27 @@
         <span class="step-links">
           {% if page_obj.has_previous %}
             <a href="?username={{ search_query }}&page=1">&laquo; first</a>
-            <a href="?username={{ search_query }}&page={{ page_obj.previous_page_number }}">previous</a>
+            <a href="?username={{ search_query }}&page={{ page_obj.previous_page_number }}">
+              previous
+            </a>
           {% endif %}
 
           <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
           </span>
 
           {% if page_obj.has_next %}
-            <a href="?username={{ search_query }}&page={{ page_obj.next_page_number }}">next</a>
-            <a href="?username={{ search_query }}&page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            <a href="?username={{ search_query }}&page={{ page_obj.next_page_number }}">
+              next
+            </a>
+            <a href="?username={{ search_query }}&page={{ page_obj.paginator.num_pages }}">
+              last &raquo;
+            </a>
           {% endif %}
         </span>
       </div>
     {% endif %}
   {% else %}
     <p>There are no drivers in the service.</p>
-  {% endif %}
-{% endblock %}
-
-{% extends "base.html" %}
-
-{% block content %}
-  <h1>
-    Cars
-    <a href="{% url 'taxi:car-create' %}" class="btn btn-primary link-to-page">
-      Create
-    </a>
-  </h1>
-
-  <form method="get" action="" class="form-inline mb-3">
-    <input
-      type="text"
-      name="model"
-      class="form-control mr-2"
-      placeholder="Search by model..."
-      value="{{ search_query }}"
-      style="width: 300px;"
-    >
-    <button class="btn btn-primary" type="submit">Search</button>
-    {% if search_query %}
-      <a href="{% url 'taxi:car-list' %}" class="btn btn-secondary ml-2">Clear</a>
-    {% endif %}
-  </form>
-
-  {% if search_query %}
-    <p class="text-muted">Search results for: "{{ search_query }}"</p>
-  {% endif %}
-
-  {% if car_list %}
-    <table class="table">
-      <thead>
-      <tr>
-        <th>ID</th>
-        <th>Model</th>
-        <th>Manufacturer</th>
-      </tr>
-      </thead>
-      <tbody>
-      {% for car in car_list %}
-        <tr>
-          <td>{{ car.id }}</td>
-          <td>
-            <a href="{% url 'taxi:car-detail' pk=car.pk %}">{{ car.model }}</a>
-          </td>
-          <td>{{ car.manufacturer.name }} ({{ car.manufacturer.country }})</td>
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
-
-    {% if is_paginated %}
-      <div class="pagination">
-        <span class="step-links">
-          {% if page_obj.has_previous %}
-            <a href="?model={{ search_query }}&page=1">&laquo; first</a>
-            <a href="?model={{ search_query }}&page={{ page_obj.previous_page_number }}">previous</a>
-          {% endif %}
-
-          <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-          </span>
-
-          {% if page_obj.has_next %}
-            <a href="?model={{ search_query }}&page={{ page_obj.next_page_number }}">next</a>
-            <a href="?model={{ search_query }}&page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-          {% endif %}
-        </span>
-      </div>
-    {% endif %}
-  {% else %}
-    <p>There are no cars in the service.</p>
-  {% endif %}
-{% endblock %}
-
-{% extends "base.html" %}
-
-{% block content %}
-  <h1>
-    Manufacturers
-    <a href="{% url 'taxi:manufacturer-create' %}" class="btn btn-primary link-to-page">
-      Create
-    </a>
-  </h1>
-
-  <form method="get" action="" class="form-inline mb-3">
-    <input
-      type="text"
-      name="name"
-      class="form-control mr-2"
-      placeholder="Search by name..."
-      value="{{ search_query }}"
-      style="width: 300px;"
-    >
-    <button class="btn btn-primary" type="submit">Search</button>
-    {% if search_query %}
-      <a href="{% url 'taxi:manufacturer-list' %}" class="btn btn-secondary ml-2">Clear</a>
-    {% endif %}
-  </form>
-
-  {% if search_query %}
-    <p class="text-muted">Search results for: "{{ search_query }}"</p>
-  {% endif %}
-
-  {% if manufacturer_list %}
-    <table class="table">
-      <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Country</th>
-      </tr>
-      </thead>
-      <tbody>
-      {% for manufacturer in manufacturer_list %}
-        <tr>
-          <td>{{ manufacturer.id }}</td>
-          <td>{{ manufacturer.name }}</td>
-          <td>{{ manufacturer.country }}</td>
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
-
-    {% if is_paginated %}
-      <div class="pagination">
-        <span class="step-links">
-          {% if page_obj.has_previous %}
-            <a href="?name={{ search_query }}&page=1">&laquo; first</a>
-            <a href="?name={{ search_query }}&page={{ page_obj.previous_page_number }}">previous</a>
-          {% endif %}
-
-          <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-          </span>
-
-          {% if page_obj.has_next %}
-            <a href="?name={{ search_query }}&page={{ page_obj.next_page_number }}">next</a>
-            <a href="?name={{ search_query }}&page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-          {% endif %}
-        </span>
-      </div>
-    {% endif %}
-  {% else %}
-    <p>There are no manufacturers in the service.</p>
   {% endif %}
 {% endblock %}
