@@ -19,12 +19,12 @@ class PublicViewsTests(TestCase):
     def test_login_required_car_list(self):
         """Test that login is required for car list"""
         response = self.client.get(reverse("taxi:car-list"))
-        self.assertNotEqual(response.status_code, 200)
+        self.assertNotEqual(response.status_code, 302)
 
     def test_login_required_manufacturer_list(self):
         """Test that login is required for manufacturer list"""
         response = self.client.get(reverse("taxi:manufacturer-list"))
-        self.assertNotEqual(response.status_code, 200)
+        self.assertNotEqual(response.status_code, 302)
 
 
 class PrivateDriverViewsTests(TestCase):

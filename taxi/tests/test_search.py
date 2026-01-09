@@ -75,7 +75,7 @@ class DriverSearchTests(TestCase):
         )
         self.assertEqual(response.status_code, 200)
         drivers = response.context["driver_list"]
-        self.assertTrue(len(drivers) >= 3)
+        self.assertEqual(len(drivers), 4)
 
 
 class CarSearchTests(TestCase):
